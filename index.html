@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>24 Solar Terms</title>
+    <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+    <link rel="stylesheet" type="text/css" href="css/cityPicker.css">
+    <link rel="stylesheet" href="css/loading.css" id="loading">
+    <link rel="stylesheet"  type="text/css" href="css/index.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<!-- jquery -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<!-- vue.js -->
+  <!-- <script type="text/javascript" src="https://unpkg.com/vue"></script> -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.common.dev.js"></script>
+	<!-- layui -->
+	<script src="https://www.layuicdn.com/layui/layui.js"></script>
+  <!-- PinYin -->
+  <script src="js/Convert_Pinyin.js"></script>
+
+</head>
+<body>
+  <div id="app">
+    <div class="text-wrapper">
+      <div class="text part1">
+        <div>
+          <span class="letter"><div class="character">L</div> <span></span></span>
+          <span class="letter"><div class="character">o</div> <span></span></span>
+          <span class="letter"><div class="character">a</div> <span></span></span>
+          <span class="letter"><div class="character">d</div> <span></span></span>
+          <span class="letter"><div class="character">i</div> <span></span></span>
+          <span class="letter"><div class="character">n</div> <span></span></span>
+          <span class="letter"><div class="character">g</div> <span></span></span>
+        </div>
+      </div>
+      <div class="how-to"><span>正在加载中，请您耐心等待...</span></div>
+    </div>
+  </div>
+    <div class="header">
+        <button type="button" id="changeColor" class="layui-btn layui-btn-radius layui-btn-normal">
+            <i class="layui-icon layui-icon-edit"></i> 更改主题
+          </button>
+        <div class="head_nav">
+     <div class="layui-container">  
+         <div class="head_text">
+            <label class="layui-form-label English"><img class="logo_day"  src="img/01.png" alt=""><img class="logo_night" src="img/00.png"  alt=""> Weather in <span id="cityName"></span> City</label>
+         </div>
+		<form id="weather" class="layui-form" action="">
+			<div class="layui-form-item">
+                <i class="layui-icon layui-icon-location"></i>
+				<label class="layui-form-label" id="city_address"></label>
+				<div class="layui-input-block">
+                    <!-- 可以在用户输入时自动搜索显示搜索列表，用户选择地址在查询天气 -->
+		  			<input type="text" id="cityChoice"  name="city" required  lay-verify="required" placeholder="请输入切换的城市" value="淮南"  autocomplete="off" class="layui-input" >
+				 <input type="hidden" id="province" value="">
+                 <input type="hidden" id="city" lay-submit lay-filter="formDemo" value="">
+<button class="layui-btn" id="choice" lay-submit lay-filter="formDemo">切换</button></div>
+			</div>
+ 
+		
+        </form>
+        
+    </div>
+    
+</div>
+
+
+
+<p id="text-care">
+  
+</p>
+  <div class="head_content">
+     
+      <div class="layui-container">
+     <div class="content_left">
+       <p id="text_pub_time">更新时间:<span class="pub_time"></span></p>
+      <div id="hd_main">
+          <p id="txt-temperature"></p>
+          <p id="txt-name"></p>
+      </div>
+      <div id="hd_aqi" >
+          <p class="info-aqi">
+            <i class="layui-icon layui-icon-tree"></i>  
+            <span class="num_weather"></span> </p>
+
+            <div class="ari-box">
+                <div class="txt-title">空气质量指数<span class="num_weather" ></span></div>
+                <div class="txt-bottom">
+                    <div class="txt-box pm25">
+                        <p class="val"></p>
+                        <p class="til">PM2.5</p>
+                    </div>
+                    <div class="txt-box pm10">
+                        <p class="val"></p>
+                        <p class="til">PM10</p>
+                    </div>
+                    <div class="txt-box so2 right_none">
+                        <p class="val"></p>
+                        <p class="til">SO2</p>
+                    </div>
+                    <div class="txt-box no2">
+                        <p class="val"></p>
+                        <p class="til">NO2</p>
+                    </div>
+                    <div class="txt-box o3">
+                        <p class="val"></p>
+                        <p class="til">O3</p>
+                    </div>
+                    <div class="txt-box co right_none">
+                        <p class="val"></p>
+                        <p class="til">CO</p>
+                    </div>
+                </div>
+            </div>
+           
+      </div>
+      <div class="hd_other">
+          <p class="one">
+              <i class="layui-icon layui-icon-release"></i>
+             <span class="txt" id="wind"> </span>
+          </p>
+          <p class="two">
+           <i class="layui-icon layui-icon-water"></i>
+           <span class="txt" id="water"></span>
+          </p>
+          <p class="three">
+              <i class="layui-icon layui-icon-console"></i>
+              <span class="txt" id="txt-kPa"></span>
+          </p>
+      </div>
+      <div class="care">
+        <i class="layui-icon layui-icon-note"></i>
+        <span id="care"></span>
+        <i class="layui-icon layui-icon-refresh" id="switch"></i>
+    </div>
+    <div id="weather-img">
+        <img  src="" alt="">
+    </div>
+    </div>
+    
+   
+      </div>
+  </div>
+   
+<div class="bg1"></div>
+</div>
+  
+<div id="content">
+     <div class="jieQiImg ">
+         <img id="jieQiImg"  src="" alt="">
+         <p class="jieQiName"></p>
+         <p class="jieQiTime"></p>
+     </div>
+     <div class="jieQiText">
+         
+         <fieldset class="layui-elem-field">
+            <legend class="jieQiYuanYin titleColor"></legend>
+            <div class="layui-field-box textColor jieQiJieShao">
+            
+            </div>
+          </fieldset>
+          <fieldset class="layui-elem-field layui-field-title">
+            <legend  class="titleColor">习俗</legend>
+            <div class="layui-field-box textColor jieQiXiShu">
+                
+            </div>
+          </fieldset>
+     </div>
+     <fieldset class="layui-elem-field layui-field-title">
+        <legend class="time-day"></legend>
+        
+      </fieldset>
+      <div class="jieQiOtherText">
+        <blockquote class="layui-elem-quote"> <h4 class="titleColor">诗句</h4>
+
+<hr class="layui-bg-red">
+<p class="jieQiShiJu textColor"></p></blockquote>  
+       
+<blockquote class="layui-elem-quote"><h4 class="titleColor">美食</h4>
+
+<hr class="layui-bg-green">
+
+<p class="jieQiFood textColor"></p></blockquote>
+
+
+<blockquote class="layui-elem-quote"><h4 class="titleColor">宜忌</h4>
+    <hr class="layui-bg-blue">
+    <p class="jieQiYiJi textColor"></p></blockquote>
+
+      </div>
+      <button class="more layui-btn  layui-btn-normal">
+          更多节气时间<i class="layui-icon layui-icon-down" style="font-size: 12px;margin-left: 5px;"></i>
+      </button>
+      <div id="shadowRight"></div>
+      <div id="shadowLeft"></div>
+  <div id="jieQiListMore">
+  
+    <div class="moreLeft moveHover"><i class="layui-icon layui-icon-left"></i></div>
+    <div class="moreRight moveHover"><i class="layui-icon layui-icon-right"></i></div>
+    <ul class="moveUl">
+     
+     
+    </ul>
+  </div>
+      <div class="moreJieQi">
+    
+        <ul class="layui-timeline moreJieQiUl">  
+        </ul>
+        
+      </div>
+     </div>
+     
+	 <div id="footer">
+     <div class="footer-box f-left"><fieldset class="layui-elem-field layui-field-title">
+      <legend>相关链接</legend>
+      <div class="layui-field-box ">
+        <a href="http://www.weather.com.cn/" target="_blank">中国天气网</a>
+        <a href="http://www.cma.gov.cn/" target="_blank">中国气象局</a>
+        <a href="http://www.nmc.cn/" target="_blank">中央气象台</a>
+        <a href="http://www.weathertv.cn/live/" target="_blank">中国天气频道</a>
+      </div>
+    </fieldset>
+  </div>
+     <div class="footer-box  f-middle"><fieldset class="layui-elem-field layui-field-title">
+      <legend>二十四节气歌</legend>
+      <div class="layui-field-box">
+        <ul>
+          <li>春雨惊春清谷天，夏满芒夏暑相连。</li>
+          <li> 秋处露秋寒霜降，冬雪雪冬小大寒。</li>
+          <li>每月两节不变更，最多相差一两天。</li>
+          <li>上半年来六廿一，下半年是八廿三。</li>
+        </ul>
+       
+   
+        
+        
+      </div>
+    </fieldset></div>
+     <div class="footer-box f-right"><fieldset class="layui-elem-field layui-field-title">
+      <legend>关于我们</legend>
+      <div class="layui-field-box">
+         <p> LeYi</p>
+         <p> &copy; 2021 版权所有</p>
+         <p class="wechat about"> <i class="layui-icon layui-icon-login-wechat"></i>
+            <img src="img/wechat.jpg" alt="">
+        </p>
+        <p class="qq about"> <i class="layui-icon layui-icon-login-qq"></i>
+          <img src="img/qq.png" alt="">
+      </p>
+      </div>
+    </fieldset></div>
+    
+     </div>
+     <div id="setColor">
+      <div class="layui-card">
+          <div class="layui-card-header">设置标题颜色<div class="title-color"></div> 
+          <div class="layui-form" style="margin-left: 27px;"> 
+        
+            <div class="layui-form-item">
+              <label class="layui-form-label">字体</label>
+              <div class="layui-input-block">
+                <select name="interest" id="title-font" lay-filter="aihao">
+                  <option value="0">微软雅黑</option>
+                  <option value="1">楷体</option>
+                  <option value="2">幼圆</option>
+                  <option value="3">黑体</option>
+                  <option value="4">隶书</option>
+                  <option value="4">宋体</option>
+                </select>
+              </div>
+            </div>
+            
+          </div>
+          <div class="layui-form"> 
+        
+            <div class="layui-form-item">
+              <div class="layui-form-item">
+                <label class="layui-form-label">字号</label>
+                <div class="layui-input-block">
+                  <input type="tel"  name="" maxlength="2" value="20"  autocomplete="off" class="layui-input title-input">
+                  <span>px</span>
+                 </div>
+                
+              </div>
+            </div>
+            
+          </div>
+        </div> 
+          <div class="layui-card-body title">
+           标题
+          </div>
+        </div>
+        <div class="layui-card">
+          <div class="layui-card-header">设置正文颜色 <div class="text-color"></div>
+          <div class="layui-form" style="margin-left: 27px;"> 
+        
+            <div class="layui-form-item">
+              <label class="layui-form-label">字体</label>
+              <div class="layui-input-block">
+                <select name="interest" id="text-font" lay-filter="lihao">
+                  <option value="0">微软雅黑</option>
+                  <option value="1">楷体</option>
+                  <option value="2">幼圆</option>
+                  <option value="3">黑体</option>
+                  <option value="4">隶书</option>
+                  <option value="4">宋体</option>
+                </select>
+              </div>
+            </div>
+            
+          </div>
+          <div class="layui-form"> 
+        
+            <div class="layui-form-item">
+              <div class="layui-form-item">
+                <label class="layui-form-label">字号</label>
+                <div class="layui-input-block">
+                  <input type="tel"  name="" maxlength="2" value="16" autocomplete="off" class="layui-input text-input">
+                  <span>px</span>
+                 </div>
+                
+              </div>
+            </div>
+            
+          </div>
+        </div> 
+          <div class="layui-card-body text-layer">
+              二十四节气，是上古农耕文明的产物，蕴含了中华民族悠久的文化内涵和历史积淀。它最初是依据斗转星移制定，古人根据北斗七星在夜空中的指向，指导农业生产不误时节。西汉武帝时期将“二十四节气”纳入《太初历》作为指导农事的历法补充，采用圭表测影法在黄河流域测定节气。现行的“二十四节气”是来自三百多年前订立的依据太阳黄阳度数划分。在历史发展中“二十四节气”被列入农历，成为农历的一个重要部分。
+          </div>
+        </div>
+      
+        <div class="layui-card">
+          <div class="layui-card-header">设置body背景颜色 <div class="body-color"></div> </div> 
+          <div class="layui-card-body body">
+           body背景色
+          </div>
+        </div>
+  </div>
+  <div id="jieQiUl">
+    <ul class="jieQiUl">
+   
+    </ul>
+  </div>
+    <div id='container'></div>
+    <script type="text/javascript" src="js/cityData.js"></script>
+   <script type="text/javascript" src="js/cityPicker.js"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=f6aa810d5118de88a3ee2110ba15395a&plugin=AMap.CitySearch"></script>
+   <script src="js/index.js"></script>
+ <script>
+   
+
+   layui.use('form', function(){
+  var form = layui.form;
+  form.on('select(aihao)', function(data){
+  $('#title-font').children().each(function(){
+    if($(this).attr('value') == data.value){
+      // console.log($(this).text());
+      $('.title').css('font-family',$(this).text());
+      titleFontFamily = $(this).text();
+    }
+  })
+});      
+     
+form.on('select(lihao)', function(data){
+  $('#text-font').children().each(function(){
+    if($(this).attr('value') == data.value){
+      // console.log($(this).text());
+      $('.text-layer').css('font-family',$(this).text());
+      textFontFamily = $(this).text();
+    }
+  })
+});      
+      
+  //各种基于事件的操作，下面会有进一步介绍
+});
+     var titleColor ='#000' ,
+        text_layerColor ='#000',
+     backgroundColor ='#f0f2f7',
+     time,
+     titleFontFamily = '微软雅黑',
+     titleFontSize='16px',
+     textFontFamily='微软雅黑',
+     textFontSize = '16px';
+    $('#changeColor').click(function(){
+       
+     $('.text-layer').css('color',text_layerColor);
+     $('.title').css('color',titleColor);
+     $('.body').css('background',backgroundColor);
+layui.use(['layer', 'form'], function(){
+	var layer = layui.layer,form = layui.form;
+	layer.open({
+		id:'add',//设置该值后，不管是什么类型的层，都只允许同时弹出一个。一般用于页面层和iframe层模式
+		title:'设置主题颜色',//设置弹出框上部标题
+		skin: 'none',//layui-layer-molv layui-layer-lan	layui-layer-rim
+        type: 1,//0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+        content:$('#setColor') ,
+		area: ['600px','600px'],//弹窗的长宽 默认auto时 maxWidth - 最大宽度 maxHeight - 最大高度
+		offset: 'auto',//默认坐标，即垂直水平居中 默认auto
+		shade:0.3,//遮罩层透明度 0-1 默认0.3
+		shadeClose:false,//是否点击遮罩层关闭弹窗 默认false
+		closeBtn:1, //右上角关闭按钮样式 一共两种分别为1 2 默认1
+		btn: ['确定', '取消'], //按钮文字
+		btnAlign: 'r',//r按钮右对齐  l按钮左对齐 c按钮居中对齐  默认r
+		
+		btn2: function(index,layero){
+			//按钮【bt2】的回调
+      // alert(2);
+      layer.msg('未更改！');
+			return true //开启该代码可禁止点击该按钮关闭
+		},
+		time: 0,//自动关闭时间 1000=1秒 默认0
+		anim:0,//弹出动画，目前anim可支持的动画类型有0-6 如果不想显示动画，设置 anim: -1 即可。 默认0
+		maxmin:true,//该参数值对type:1和type:2有效。最大最小化按钮。 默认false
+		fixed:true,//即鼠标滚动时，层是否固定在可视区域  默认true
+		resize:true,//是否允许在弹层右下角拖动来拉伸尺寸  默认true
+		scrollbar:true,//是否允许浏览器出现滚动条  默认true
+        zIndex:19980222,//层叠顺序
+		yes: function(index,layero){//确定按钮回调方法
+            $('.textColor').css({
+              color:text_layerColor,
+              fontSize:textFontSize,
+              fontFamily:textFontFamily,
+              lineHeight: textFontSize * 2 + 'px'
+            });
+            // console.log(textFontSize);
+            $('.titleColor').css({
+              color:titleColor,
+              fontSize:titleFontSize,
+              fontFamily:titleFontFamily,
+              lineHeight:titleFontSize + 'px'
+            });
+            $('body').css('background',backgroundColor);
+            
+            layer.close(index);
+            layer.msg('更改成功!'); 
+                text_layerColor = $('.textColor').css('color');
+                titleColor = $('.titleColor').css('color');
+                backgroundColor = $('body').css('background-color');
+                titleFontSize = $('.titleColor').css('font-size');
+                titleFontFamily = $('.titleColor').css('font-family');
+                textFontSize = $('.textColor').css('font-size');
+                textFontFamily = $('.textColor').css('font-family');
+                // console.log(text_layerColor,titleColor,backgroundColor)
+          
+			
+		},
+		cancel: function(index, layero){//右上角关闭按钮触发的回调，两个参数，分别为：当前层索引参数（index）、当前层的DOM对象（layero）
+      if(confirm('确定要关闭么？')){ //只有当点击confirm框的确定时，该层才会关闭
+        layer.msg('未更改！');
+				layer.close(index);
+			}
+			return false; 
+		} 
+ 
+    });
+   
+})
+layui.use('colorpicker', function(){
+  var colorpicker = layui.colorpicker;
+   
+  colorpicker.render({
+    elem: '.title-color'
+    ,size:'xs'
+    ,color:titleColor
+    ,alpha:true
+    ,change: function(color){
+      $('.title').css('color',color);
+    
+    }
+    ,done:function(color){
+        $('.title').css('color',color);
+        
+         titleColor=color;
+         
+    }
+  });
+  colorpicker.render({
+    elem: '.text-color'
+    ,size:'xs'
+    ,color:text_layerColor
+    ,alpha:true
+    ,change: function(color){
+      $('.text-layer').css('color',color);
+    }
+    ,done:function(color){
+        $('.text-layer').css('color',color);
+        text_layerColor = color;
+    }
+  });
+  colorpicker.render({
+    elem: '.body-color'
+    ,size:'sm'
+    ,color:backgroundColor
+    ,alpha:true
+    ,change: function(color){
+      $('.body').css('background',color);
+    }
+    ,done:function(color){
+        $('.body').css('background',color);
+        backgroundColor = color;
+    }
+  });
+  layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  
+
+      
+});
+
+});
+    })
+  
+
+    $('.title-input').blur(function(){
+       var num =  Number( $(this).val());
+      if(num < 0 || num > 60){
+        $(this).val(20);
+        $('.title').css({
+          fontSize:20,
+          lineHeight:'20px'
+        });
+        layer.msg('输入数值错处，请输入0-60之间的数字!'); 
+      
+      }else{
+        titleFontSize = num ;
+        $('.title').css({
+          fontSize:num,
+          lineHeight:num+'px'
+        });
+      }
+
+    })
+    $('.text-input').blur(function(){
+       var num =  Number( $(this).val());
+      if(num < 0 || num > 60){
+        $(this).val(16);
+        $('.text-layer').css({
+          fontSize:16,
+          lineHeight:'20px'
+        });
+        layer.msg('输入数值错处，请输入0-60之间的数字!'); 
+      
+      }else{
+        textFontSize = num ;
+        $('.text-layer').css({
+          fontSize:num,
+          lineHeight:num+'px'
+        });
+      }
+
+    })  
+
+
+    function layer_ul(){
+      layui.use(['layer', 'form'], function(){
+	var layer = layui.layer,form = layui.form;
+	layer.open({
+		id:'JieQi',//设置该值后，不管是什么类型的层，都只允许同时弹出一个。一般用于页面层和iframe层模式
+		title:'节气名称',//设置弹出框上部标题
+		skin: 'none',//layui-layer-molv layui-layer-lan	layui-layer-rim
+    type: 1,//0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+    content:$('#jieQiUl') ,
+		area: ['200px','300px'],//弹窗的长宽 默认auto时 maxWidth - 最大宽度 maxHeight - 最大高度
+		offset: 'r',//默认坐标，即垂直水平居中 默认auto
+		shade:0,//遮罩层透明度 0-1 默认0.3
+		shadeClose:false,//是否点击遮罩层关闭弹窗 默认false
+		closeBtn:1, //右上角关闭按钮样式 一共两种分别为1 2 默认
+		time: 0,//自动关闭时间 1000=1秒 默认0
+		anim:0,//弹出动画，目前anim可支持的动画类型有0-6 如果不想显示动画，设置 anim: -1 即可。 默认0
+		maxmin:false,//该参数值对type:1和type:2有效。最大最小化按钮。 默认false
+		fixed:true,//即鼠标滚动时，层是否固定在可视区域  默认true
+		resize:false,//是否允许在弹层右下角拖动来拉伸尺寸  默认true
+		scrollbar:true,//是否允许浏览器出现滚动条  默认true
+        zIndex:19980222,//层叠顺序
+
+	
+ 
+    });
+   
+})
+    }
+ </script>
+
+
+</body>
+</html>

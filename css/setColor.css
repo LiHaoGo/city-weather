@@ -1,0 +1,22 @@
+
+#setColor p{
+    display: inline-block;
+    font-size: 16px;
+    padding: 10px;
+}
+#setColor{
+    width: 80%;
+    margin-left: 10%;
+    padding-top: 20px;
+    background: #f2f0f7;
+}
+#setColor .title-color{
+    display: inline-block;
+}
+#setColor .layui-form-mid{
+    display: inline-block;
+    float: none;
+}
+#setColor .layui-input{
+    height: 33px;
+}
