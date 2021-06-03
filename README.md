@@ -10,7 +10,7 @@
 
 #### 加载页面 ↓
 
-![image-20210603212523210](C:\Users\LeYi\AppData\Roaming\Typora\typora-user-images\image-20210603212523210.png)
+![image-20210603212523210](readme_img/image-20210603212523210.png)
 
 #### 默认定位用户的当前位置 ↓
 
