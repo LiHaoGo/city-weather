@@ -1,3 +1,5 @@
+
+[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=LiHaoGo)](https://github.com/anuraghazra/github-readme-stats)
 ## 基于Layui的二十四节气主页
 
 ##### 项目描述: 介绍二十四节气的相关信息的网站静态页面，其中包括对天气的展示以及各城市之间的切换，会展示切换城市的实时天气。天气数据来源与腾讯天气API，通过高德地图API定位到使用者的位置，展示为默认的城市及天气。其中二十四节气的相关信息数据来源，均来自网络上的二十四节气API。
